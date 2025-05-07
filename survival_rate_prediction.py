@@ -135,14 +135,8 @@ cat_feature_names = preprocessor.named_transformers_['cat'].get_feature_names_ou
 # Combine all feature names in the correct order
 feature_names = numerical_columns + list(cat_feature_names)
 
-# Convert the processed data (potentially sparse) to a dense DataFrame
-if hasattr(X_processed, "toarray"):  # Check if it's a sparse matrix
-    X_processed_df = pd.DataFrame(X_processed.toarray(), columns=feature_names, index=X.index)
-elif isinstance(X_processed, np.ndarray):
-    X_processed_df = pd.DataFrame(X_processed, columns=feature_names, index=X.index)
-else:
-    # Handle other potential types if necessary, though ColumnTransformer usually returns ndarray or sparse
-    X_processed_df = pd.DataFrame(X_processed, columns=feature_names, index=X.index)
+# Convert the processed data pandas DataFrame
+X_processed_df = pd.DataFrame(X_processed, columns=feature_names, index=X.index)
 
 # Combine processed features with the encoded target variable
 df_processed_corr = pd.concat([X_processed_df, pd.Series(y_encoded, name='Survival_Rate_Encoded', index=X.index)], axis=1)
