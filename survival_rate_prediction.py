@@ -30,7 +30,7 @@ y_encoded[y == 100] = 4
 
 # Split the data with stratification
 X_temp, X_test, y_temp, y_test = train_test_split(X, y_encoded, test_size=0.5, random_state=42, stratify=y_encoded)
-X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42, stratify=y_temp)
+X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.3, random_state=42, stratify=y_temp)
 
 # Save testing set to CSV
 # Convert y_test from numpy array to pandas Series before concatenation
@@ -38,8 +38,6 @@ y_test_series = pd.Series(y_test, name=label)
 test_data = pd.concat([X_test, y_test_series], axis=1)
 test_data.to_csv('test_set.csv', index=False)
 
-# Create ordinal encoder for Diet column
-from sklearn.preprocessing import OrdinalEncoder
 
 # Define the preprocessor with different scaling for Age and other numerical features
 # and ordinal encoding for Diet column
@@ -101,9 +99,9 @@ plt.title('Confusion Matrix')
 plt.savefig('confusion_matrix.png')
 plt.close()
 
-# Plot ROC curve for multiclass (one-vs-rest)
+# Plot ROC curve for multiclass
 plt.figure(figsize=(10, 8))
-for i in range(5):  # 5 classes
+for i in range(5):
     precision, recall, _ = precision_recall_curve(y_val == i, y_val_proba[:, i])
     avg_precision = average_precision_score(y_val == i, y_val_proba[:, i])
     plt.plot(recall, precision, lw=2, 
