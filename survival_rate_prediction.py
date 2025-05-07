@@ -128,8 +128,6 @@ print("\nClassification Report:")
 print(classification_report(y_test, y_test_pred))
 
 
-# Create a correlation heatmap for ALL features and the encoded target
-
 # Apply the preprocessor to the entire feature set X
 X_processed = preprocessor.fit_transform(X)
 
@@ -155,13 +153,13 @@ df_processed_corr = pd.concat([X_processed_df, pd.Series(y_encoded, name='Surviv
 corr_matrix_full = df_processed_corr.corr()
 
 # Plot the full correlation heatmap
-plt.figure(figsize=(20, 18)) # Increased size for more features
+plt.figure(figsize=(20, 18))
 cmap = sns.diverging_palette(230, 20, as_cmap=True)
 sns.heatmap(corr_matrix_full, cmap=cmap, vmax=1.0, vmin=-1.0, center=0,
-            linewidths=.5, cbar_kws={"shrink": .5}, annot=False) # Annotations might be too cluttered
+            linewidths=.5, cbar_kws={"shrink": .5}, annot=False)
 
 plt.title('Correlation Heatmap of All Processed Features and Encoded Survival Rate', fontsize=16)
-plt.xticks(rotation=90, fontsize=8) # Adjust text size and rotation
+plt.xticks(rotation=90, fontsize=8)
 plt.yticks(fontsize=8)
 plt.tight_layout()
 plt.savefig('correlation_heatmap_full.png')
