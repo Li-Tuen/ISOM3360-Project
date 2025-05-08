@@ -28,6 +28,10 @@ y_encoded[(y >= 50) & (y < 80)] = 2
 y_encoded[(y >= 80) & (y < 100)] = 3
 y_encoded[y == 100] = 4
 
+# Print out distribution of the target variable
+print("Distribution of the target variable:")
+print(pd.Series(y_encoded).value_counts(),'\n')
+
 # Split the data with stratification
 X_temp, X_test, y_temp, y_test = train_test_split(X, y_encoded, test_size=0.5, random_state=42, stratify=y_encoded)
 X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.3, random_state=42, stratify=y_temp)
