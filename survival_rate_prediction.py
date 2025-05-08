@@ -43,8 +43,7 @@ test_data = pd.concat([X_test, y_test_series], axis=1)
 test_data.to_csv('test_set.csv', index=False)
 
 
-# Define the preprocessor with different scaling for Age and other numerical features
-# and ordinal encoding for Diet column
+# Define the preprocessor
 preprocessor = ColumnTransformer(
     transformers=[
         ('num', MinMaxScaler(), numerical_columns),
